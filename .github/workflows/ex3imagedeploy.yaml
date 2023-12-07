@@ -1,0 +1,37 @@
+on: [push]
+
+name: Linux_Container_Flask_Workflow
+
+env:
+  RESOURCE_GROUP: aguadamillas_students_1
+  SUBSCRIPTION_ID: e0b9cada-61bc-4b5a-bd7a-52c606726b3b
+  USER_ALIAS: ketis
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout the repo
+      - name: "Checkout Github Action"
+        uses: actions/checkout@main
+
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ketiscontainerregistry.azurecr.io # Replace with your Azure Container Registry URL
+          username: ${{ vars.AZURE_REGISTRY_USERNAME }} # Replace with your Azure Container Registry username secret
+          password: ${{ secrets.AZURE_REGISTRY_PASSWORD }} # Replace with your Azure Container Registry password secret
+
+      - run: |
+          docker build . -t contoso.azurecr.io/flask-demo:${{ github.sha }}
+          docker push contoso.azurecr.io/flask-demo:${{ github.sha }}
+
+      - name: "Deploy to Azure Web App for Containers"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "ketis-appservice" # Replace with your Azure Web App name
+          images: "contoso.azurecr.io/flask-demo:${{ github.sha }}"

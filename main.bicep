@@ -13,7 +13,7 @@ param DOCKER_REGISTRY_SERVER_USERNAME string
 param DOCKER_REGISTRY_SERVER_PASSWORD string
 
 module acr './ResourceModules-main/modules/container-registry/registry/main.bicep' = {
-  name: 'acrDeployment'
+  name: containerRegistryName
   params: {
     name: containerRegistryName
     location: location
@@ -23,7 +23,7 @@ module acr './ResourceModules-main/modules/container-registry/registry/main.bice
 }
 
 module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = {
-  name: 'servicePlanDeployment'
+  name: appServicePlanName
   params: {
     name: appServicePlanName
     location: location
@@ -41,7 +41,7 @@ module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = 
 }
 
 module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
-  name: 'webAppDeployment'
+  name: webAppName
   params: {
     name: webAppName
     location: location

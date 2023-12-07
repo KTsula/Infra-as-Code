@@ -6,10 +6,10 @@
             "value": "ketiscontainerregistry"
         },
         "appServicePlanName": {
-            "value": "ketis-asp"
+            "value": "ketis-appservice-plan"
         },
         "webAppName": {
-            "value": "ketis-webapp"
+            "value": "ketis-appservice"
         },
         "containerRegistryImageName": {
             "value": "flask-demo"

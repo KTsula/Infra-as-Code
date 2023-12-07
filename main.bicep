@@ -1,4 +1,4 @@
-// main.bicep
+// Main.bicep
 
 param containerRegistryName string
 param location string

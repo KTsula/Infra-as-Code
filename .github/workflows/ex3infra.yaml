@@ -37,5 +37,5 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION_ID}}
           resourceGroupName: ${{ env.RESOURCE_GROUP}}
           template: ./main.bicep
-          parameters: ./parameters/main.parameters.json DOCKER_REGISTRY_SERVER_URL=${{ vars.DOCKER_REGISTRY_SERVER_URL }} DOCKER_REGISTRY_SERVER_USERNAME=${{ vars.DOCKER_REGISTRY_SERVER_USERNAME }} DOCKER_REGISTRY_SERVER_PASSWORD=${{ secrets.DOCKER_REGISTRY_SERVER_PASSWORD }}
+          parameters: ./parameters/dev.parameters.json DOCKER_REGISTRY_SERVER_URL=${{ vars.DOCKER_REGISTRY_SERVER_URL }} DOCKER_REGISTRY_SERVER_USERNAME=${{ vars.DOCKER_REGISTRY_SERVER_USERNAME }} DOCKER_REGISTRY_SERVER_PASSWORD=${{ secrets.DOCKER_REGISTRY_SERVER_PASSWORD }}
           deploymentName: ${{ env.USER_ALIAS }}

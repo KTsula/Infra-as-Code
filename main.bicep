@@ -19,7 +19,6 @@ module acr './ResourceModules-main/modules/container-registry/registry/main.bice
     location: location
     acrAdminUserEnabled: true
   }
-  scope: resourceGroup('aguadamillas_students_1')
 }
 
 module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = {
@@ -33,11 +32,9 @@ module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = 
       name: 'B1'
       size: 'B1'
       tier: 'Basic'
-      kind: 'Linux'
-      reserved: true
     }
+    reserved: true
   }
-  scope: resourceGroup('aguadamillas_students_1')
 }
 
 module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
@@ -58,5 +55,4 @@ module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
       DOCKER_REGISTRY_SERVER_PASSWORD: DOCKER_REGISTRY_SERVER_PASSWORD
     }
   }
-  scope: resourceGroup('aguadamillas_students_1')
 }

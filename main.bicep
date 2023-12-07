@@ -43,7 +43,7 @@ module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
     name: webAppName
     location: location
     kind: 'app'
-    serverFarmResourceId: resourceId('Microsoft.Web/serverfarms', appServicePlanName)
+    serverFarmResourceId: servicePlan.outputs.resourceId
     siteConfig: {
       linuxFxVersion: 'DOCKER|${containerRegistryName}.azurecr.io/${containerRegistryImageName}:${containerRegistryImageVersion}'
       appCommandLine: ''

@@ -27,11 +27,11 @@ jobs:
           password: ${{ secrets.AZURE_REGISTRY_PASSWORD }} # Replace with your Azure Container Registry password secret
 
       - run: |
-          docker build . -t contoso.azurecr.io/flask-demo:${{ github.sha }}
-          docker push contoso.azurecr.io/flask-demo:${{ github.sha }}
+          docker build . -t ketiscontainerregistry.azurecr.io/flask-demo:${{ github.sha }}
+          docker push ketiscontainerregistry.azurecr.io/flask-demo:${{ github.sha }}
 
       - name: "Deploy to Azure Web App for Containers"
         uses: azure/webapps-deploy@v2
         with:
           app-name: "ketis-appservice" # Replace with your Azure Web App name
-          images: "contoso.azurecr.io/flask-demo:${{ github.sha }}"
+          images: "ketiscontainerregistry.azurecr.io/flask-demo:${{ github.sha }}"

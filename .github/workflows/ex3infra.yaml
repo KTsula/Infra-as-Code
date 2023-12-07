@@ -1,6 +1,6 @@
 name: ex3infra
 
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 
 env:
   RESOURCE_GROUP: aguadamillas_students_1

@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerRegistryName": {
+            "value": "ketisacrdev"
+        },
+        "appServicePlanName": {
+            "value": "ketis-asp-dev"
+        },
+        "webAppName": {
+            "value": "ketis-web-dev"
+        },
+        "containerRegistryImageName": {
+            "value": "flask-demo"
+        },
+        "containerRegistryImageVersion": {
+            "value": "latest"
+        },
+        "containerRegistryUrl": {
+            "value": "ketisacrdev.azurecr.io"
+        },
+        "containerRegistryUsername": {
+            "value": "ketisacrdev"
+        },
+        "containerRegistryPassword": {
+            "value": "1f2e3d4c5b6a7"
+        },
+        "location": {
+            "value": "Korea Central"
+        }
+    }
+}

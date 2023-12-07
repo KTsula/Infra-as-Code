@@ -3,28 +3,19 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "containerRegistryName": {
-            "value": "ketisacrdev"
+            "value": "ketiscontainerregistry"
         },
         "appServicePlanName": {
-            "value": "ketis-asp-dev"
+            "value": "ketis-asp"
         },
         "webAppName": {
-            "value": "ketis-web-dev"
+            "value": "ketis-webapp"
         },
         "containerRegistryImageName": {
             "value": "flask-demo"
         },
         "containerRegistryImageVersion": {
             "value": "latest"
-        },
-        "containerRegistryUrl": {
-            "value": "ketisacrdev.azurecr.io"
-        },
-        "containerRegistryUsername": {
-            "value": "ketisacrdev"
-        },
-        "containerRegistryPassword": {
-            "value": "1f2e3d4c5b6a7"
         },
         "location": {
             "value": "Korea Central"

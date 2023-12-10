@@ -1,11 +1,14 @@
 name: ex3infra
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 env:
   RESOURCE_GROUP: aguadamillas_students_1
   SUBSCRIPTION_ID: e0b9cada-61bc-4b5a-bd7a-52c606726b3b
   USER_ALIAS: ketis
+  KEY_VAULT_SECRET_NAME_ACR_USERNAME: keyVaultSecretNameACRUsername
+  KEY_VAULT_SECRET_NAME_ACR_PASSWORD: keyVaultSecretNameACRPassword1
+  KEY_VAULT_NAME: ketis-keyvault
 
 jobs:
   build:
@@ -25,10 +28,27 @@ jobs:
       # Checkout code
       - uses: actions/checkout@main
 
+      - name: "Get docker registry credentials from Azure Key Vault"
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            echo "REGISTRY_USERNAME=$(az keyvault secret show --name ${{ env.KEY_VAULT_SECRET_NAME_ACR_USERNAME }} --vault-name ${{ env.KEY_VAULT_NAME }} --query value -o tsv)" >> $GITHUB_ENV
+            echo "REGISTRY_PASSWORD=$(az keyvault secret show --name ${{ env.KEY_VAULT_SECRET_NAME_ACR_PASSWORD }} --vault-name ${{ env.KEY_VAULT_NAME }} --query value -o tsv)" >> $GITHUB_ENV
+
         # Log into Azure
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: deploy-key-vault
+        uses: azure/arm-deploy@v1.0.9
+        with:
+          subscriptionId: ${{ env.SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ env.RESOURCE_GROUP }}
+          template: ./key-vault.bicep
+          parameters: ./parameters/key-vault.json
+          deploymentName: "${{ env.USER_ALIAS }}-kv"
+          failOnStdErr: false
 
         # Deploy Bicep file
       - name: deploy

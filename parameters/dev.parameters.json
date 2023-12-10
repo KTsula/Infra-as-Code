@@ -17,6 +17,9 @@
         "containerRegistryImageVersion": {
             "value": "latest"
         },
+        "keyVaultName": {
+            "value": "ketis-keyvault"
+        },
         "location": {
             "value": "Korea Central"
         }

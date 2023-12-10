@@ -6,19 +6,17 @@ param webAppName string
 param appServicePlanName string
 param containerRegistryImageName string
 param containerRegistryImageVersion string
+param keyVaultName string
 
-param DOCKER_REGISTRY_SERVER_URL string
-param DOCKER_REGISTRY_SERVER_USERNAME string
-@secure()
-param DOCKER_REGISTRY_SERVER_PASSWORD string
+param kevVaultSecretNameACRUsername string = 'acr-username'
+param kevVaultSecretNameACRPassword1 string = 'acr-password1'
 
-module acr './ResourceModules-main/modules/container-registry/registry/main.bicep' = {
+resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
   name: containerRegistryName
-  params: {
-    name: containerRegistryName
-    location: location
-    acrAdminUserEnabled: true
-  }
+}
+
+resource keyvault 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: keyVaultName
 }
 
 module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = {
@@ -39,6 +37,11 @@ module servicePlan './ResourceModules-main/modules/web/serverfarm/main.bicep' = 
 
 module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
   name: webAppName
+  dependsOn: [
+    servicePlan
+    acr
+    keyvault
+  ]
   params: {
     name: webAppName
     location: location
@@ -50,9 +53,9 @@ module webApp './ResourceModules-main/modules/web/site/main.bicep' = {
     }
     appSettingsKeyValuePairs: {
       WEBSITES_ENABLE_APP_SERVICE_STORAGE: false
-      DOCKER_REGISTRY_SERVER_URL: DOCKER_REGISTRY_SERVER_URL
-      DOCKER_REGISTRY_SERVER_USERNAME: DOCKER_REGISTRY_SERVER_USERNAME
-      DOCKER_REGISTRY_SERVER_PASSWORD: DOCKER_REGISTRY_SERVER_PASSWORD
     }
+    dockerRegistryServerUrl: 'https://${containerRegistryName}.azurecr.io'
+    dockerRegistryServerUserName: keyvault.getSecret(kevVaultSecretNameACRUsername)
+    dockerRegistryServerPassword: keyvault.getSecret(kevVaultSecretNameACRPassword1)
   }
 }

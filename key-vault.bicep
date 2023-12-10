@@ -2,7 +2,7 @@ param location string
 param keyVaultName string
 param containerRegistryName string
 param keyVaultSecretNameACRUsername string = 'acr-username'
-param keyVaultSecretUserACRPassword1 string = 'acr-password1'
+param keyVaultSecretNameACRPassword1 string = 'acr-password1'
 
 module keyvault 'ResourceModules-main/modules/key-vault/vault/main.bicep' = {
   name: keyVaultName
@@ -31,6 +31,6 @@ module acr './ResourceModules-main/modules/container-registry/registry/main.bice
     acrAdminUserEnabled: true
     adminCredentialsKeyVaultResourceId: resourceId('Microsoft.KeyVault/vaults', keyVaultName)
     adminCredentialsKeyVaultSecretUserName: keyVaultSecretNameACRUsername
-    adminCredentialsKeyVaultSecretUserPassword1: keyVaultSecretUserACRPassword1
+    adminCredentialsKeyVaultSecretUserPassword1: keyVaultSecretNameACRPassword1
   }
 }
